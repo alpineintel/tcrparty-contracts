@@ -1,0 +1,43 @@
+{
+  "name": "sol-tcr",
+  "version": "0.0.1",
+  "description": "A generic, string-keyed TCR in Solidity",
+  "scripts": {
+    "install": "truffle install",
+    "compile": "truffle compile",
+    "publish": "truffle publish",
+    "coverage": "solidity-coverage",
+    "deploy-rinkeby": "truffle migrate --network rinkeby",
+    "deploy-ganache": "truffle migrate --network ganache",
+    "deploy-mainnet": "truffle migrate --network mainnet",
+    "deploy-proxies:rinkeby": "truffle exec --network rinkeby ./scripts/deploy_proxies.js",
+    "deploy-proxies:ganache": "truffle exec --network ganache ./scripts/deploy_proxies.js",
+    "deploy-proxies:mainnet": "truffle exec --network mainnet ./scripts/deploy_proxies.js",
+    "test": "npm run lint ./ && truffle test",
+    "fix": "eslint --fix",
+    "lint": "eslint"
+  },
+  "author": "Irene Lin <irene.lin@consensys.net>, Mira Zeitlin <miranda.zeitlin@consensys.net>, Yorke Rhodes <yorke.rhodesiv@consensys.net>",
+  "license": "ISC",
+  "dependencies": {
+    "bignumber.js": "5.0.0",
+    "bip39": "2.5.0",
+    "bn.js": "4.11.8",
+    "ethereumjs-abi": "0.6.5",
+    "ethereumjs-wallet": "0.6.0",
+    "ethjs": "0.3.1",
+    "ethjs-provider-http": "0.1.6",
+    "ethjs-query": "0.3.2",
+    "ethjs-rpc": "0.1.8",
+    "ethjs-util": "0.1.4",
+    "truffle": "4.1.11",
+    "truffle-hdwallet-provider": "0.0.5",
+    "zeppelin-solidity": "^1.12.0"
+  },
+  "devDependencies": {
+    "eslint": "4.15.0",
+    "eslint-config-airbnb-base": "12.1.0",
+    "eslint-plugin-import": "2.8.0",
+    "solidity-coverage": "0.5.4"
+  }
+}
