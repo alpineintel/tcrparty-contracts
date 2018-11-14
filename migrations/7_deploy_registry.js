@@ -24,6 +24,6 @@ module.exports = function (deployer, network, accounts) {
       'TCR Party',
     );
   }).then((registry) => {
-    console.log(registry.address);
+    console.log(`TCR has been deployed to ${registry.address}`);
   });
 };
