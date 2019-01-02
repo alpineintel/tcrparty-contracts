@@ -6,6 +6,12 @@ const PLCR = artifacts.require('plcr-revival/PLCRVoting.sol');
 const DLL = artifacts.require('dll/DLL.sol');
 const AttributeStore = artifacts.require('attrstore/AttributeStore.sol');
 
+const PERCENT = 1;
+const TCRP = 10 ** 15;
+const MIN = 60;
+const HOUR = MIN * 60
+const DAY = HOUR * 24;
+
 module.exports = function (deployer, network, accounts) {
   deployer.link(DLL, PLCR);
   deployer.link(AttributeStore, PLCR);
@@ -32,20 +38,34 @@ module.exports = function (deployer, network, accounts) {
         TCRPartyPoints.address,
         plcr.address,
         [
-          500 * (10 ** 15),       // minDeposit
-          15000000 * (10 ** 15),  // pMinDeposit
-          172800,                 // applyStageLen
-          15000000 * (10 ** 15),  // pApplyStageLen
-          172800,                 // commitStageLen
-          15000000 * (10 ** 15),  // pCommitStageLen
-          64800,                  // revealStageLen
-          15000000 * (10 ** 15),  // pRevealStageLen
-          75,                     // dispensationPct
-          15000000 * (10 ** 15),  // pDispensationPct
-          50,                     // voteQuorum
-          15000000 * (10 ** 15),  // pVoteQuorum
-          172800,                 // exitTimeDelay
-          172800,                 // exitPeriodLen
+          // minDeposit
+          500 * TCRP,
+          // pMinDeposit
+          15000000 * TCRP,
+          // applyStageLen (2 days)
+          2 * MIN,
+          // pApplyStageLen
+          15000000 * TCRP,
+          // commitStageLen
+          2 * MIN,
+          // pCommitStageLen
+          15000000 * TCRP,
+          // revealStageLen
+          2 * MIN,
+          // pRevealStageLen
+          15000000 * TCRP,
+          // dispensationPct
+          75 * PERCENT,
+          // pDispensationPct
+          15000000 * TCRP,
+          // voteQuorum
+          50 * PERCENT,
+          // pVoteQuorum
+          15000000 * TCRP,
+          // exitTimeDelay
+          5 * MIN,
+          // exitPeriodLen
+          5 * MIN,
         ],
       );
     })

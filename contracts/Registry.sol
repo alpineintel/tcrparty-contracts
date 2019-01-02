@@ -33,7 +33,7 @@ contract Registry {
         address owner;          // Owner of Listing
         uint unstakedDeposit;   // Number of tokens in the listing not locked in a challenge
         uint challengeID;       // Corresponds to a PollID in PLCRVoting
-	uint exitTime;		// Time the listing may leave the registry
+        uint exitTime;		// Time the listing may leave the registry
         uint exitTimeExpiry;    // Expiration date of exit period
     }
 
@@ -51,6 +51,9 @@ contract Registry {
 
     // Maps listingHashes to associated listingHash data
     mapping(bytes32 => Listing) public listings;
+
+    // Keeps track of the number of listings currently whitelisted
+    uint public whitelistCount = 0;
 
     // Global Variables
     EIP20Interface public token;
@@ -339,11 +342,13 @@ contract Registry {
         // Ensures that the application was made,
         // the application period has ended,
         // the listingHash can be whitelisted,
+        // the number of whitelisted listings is less than 100
         // and either: the challengeID == 0, or the challenge has been resolved.
         if (
             appWasMade(_listingHash) &&
             listings[_listingHash].applicationExpiry < now &&
             !isWhitelisted(_listingHash) &&
+            whitelistCount < 100 &&
             (challengeID == 0 || challenges[challengeID].resolved == true)
         ) { return true; }
 
@@ -461,7 +466,11 @@ contract Registry {
     @param _listingHash The listingHash of an application/listingHash to be whitelisted
     */
     function whitelistApplication(bytes32 _listingHash) private {
-        if (!listings[_listingHash].whitelisted) { emit _ApplicationWhitelisted(_listingHash); }
+        if (!listings[_listingHash].whitelisted) {
+            whitelistCount += 1;
+            emit _ApplicationWhitelisted(_listingHash);
+        }
+
         listings[_listingHash].whitelisted = true;
     }
 
@@ -474,6 +483,7 @@ contract Registry {
 
         // Emit events before deleting listing to check whether is whitelisted
         if (listing.whitelisted) {
+            whitelistCount -= 1;
             emit _ListingRemoved(_listingHash);
         } else {
             emit _ApplicationRemoved(_listingHash);
