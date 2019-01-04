@@ -43,15 +43,15 @@ module.exports = function (deployer, network, accounts) {
           // pMinDeposit
           15000000 * TCRP,
           // applyStageLen (2 days)
-          2 * MIN,
+          12 * HOUR,
           // pApplyStageLen
           15000000 * TCRP,
           // commitStageLen
-          2 * MIN,
+          12 * HOUR,
           // pCommitStageLen
           15000000 * TCRP,
           // revealStageLen
-          2 * MIN,
+          6 * HOUR,
           // pRevealStageLen
           15000000 * TCRP,
           // dispensationPct
@@ -63,14 +63,17 @@ module.exports = function (deployer, network, accounts) {
           // pVoteQuorum
           15000000 * TCRP,
           // exitTimeDelay
-          5 * MIN,
+          12 * HOUR,
           // exitPeriodLen
-          5 * MIN,
+          6 * HOUR,
         ],
       );
     })
     .then(() => {
       console.log(`  Initializing registry contract`);
+      console.log(`    TCRP Address:  ${TCRPartyPoints.address}`)
+      console.log(`    PLCR Address:  ${plcr.address}`)
+      console.log(`    Param Address: ${parameterizer.address}`)
       return registry.init(
         TCRPartyPoints.address,
         plcr.address,
